@@ -5,6 +5,7 @@ let vsia = document.getElementById("btn2");
 
 let slots = document.querySelectorAll(".old");
 let message = "Venceu!";
+let secondPlayer ;
 
 let container = document.querySelector(".square");
 let mostraPlacar = document.querySelector (".placar");
@@ -17,12 +18,13 @@ let vitorias2 = document.getElementById("countero");
 let counter1 = 0;
 let counter2 = 0;
 
-//adicionando o evento de click para todas as boxes
+
 vsmode.addEventListener("click", function  (){
     container.classList.remove("hide");
     mostraPlacar.classList.remove("hide");
     Start();
     vsia.style.display = "none";
+    secondPlayer = this.getAttribute("id");
 })
 
 vsia.addEventListener("click", function () {
@@ -30,8 +32,10 @@ vsia.addEventListener("click", function () {
     mostraPlacar.classList.remove("hide");
     machinePlaying();
     vsmode.style.display = "none";
+    secondPlayer = this.getAttribute("id");
 })
 
+//adicionando o evento de click para todas as boxes no modo 2P
 function Start(){
     for (let i=0;i<slots.length;i++){
         slots[i].addEventListener("click", function Oi () {
@@ -56,18 +60,18 @@ function Start(){
 
 function declararWinner(winner){
 
-    let PlacarX = document.querySelector("#counterx");
+    let PlacarX = document.querySelector("#counterx");//pegando o contador do placar
     let PlacarO = document.querySelector("#countero");
 
     if (winner == "x"){
-        PlacarX.textContent = parseInt(PlacarX.textContent) + 1;
+        PlacarX.textContent = parseInt(PlacarX.textContent) + 1; //recebendo o conteudo (string) e convertendo em INT
     }else if (winner == "o"){
         PlacarO.textContent = parseInt(PlacarO.textContent) + 1;
-    }else{
+    }else {
         alert("Deu velha");
     }
 
-    counter1 = 0;
+    counter1 = 0; // isso faz com que o X sempre seja o primeiro a jogar.
     counter2 = 0;
 
     let slotsToRemove = document.querySelectorAll(".old div");
@@ -83,6 +87,11 @@ function CheckPlayer(){
     if(counter1 == counter2){// como ele sempre inicia em 0=0, o X será sempre o 1.
         el = x;
         counter1 = counter1 + 1; //adicionando um counter para que o if se torne falso
+
+        if(secondPlayer == "btn2"){
+            counter2++;
+            jogadamaquina();
+        }
     }else{
         el= o;
         counter2 = counter2 +1;// a chave dessa logica é o contador de jogadas lá encima. Quando estiverem iguais, é o X que joga, quando tiverem diferentes, é o circulo.
@@ -245,42 +254,47 @@ function winner(){
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min)) + min;
         }
-        let preenchidos;
-        for (let i=0;i<slots.length;i++){ // if de 0 a 9 (9 slots)
-            let aleatorio = getRandomInt(0,8); // pega 9 numeros aleatorios de 0-8
-            slots[i].addEventListener("click", function Oi (){
-            let el = elementsPlaying(counter1,counter2);// aqui joga pra funcao que decide se vai preencher com BOLA OU X
-            let elClone = el.cloneNode(true); // aqui eu to clonando o elemento, pra que possa ter varias BOLAS ou X
-            if (counter1 == counter2){ // essas variaveis sao setadas em 0 inicialmente, quando uma pessoa joga ela recebe +1
-                    if(slots[i].childNodes.length == 0){ // ta verificando se tá vazio
-                        this.appendChild(elClone);// se tiver, coloca o elemento clonado no objeto
-                        counter1++;//adiciona +1 no counter
-                    }// essa parte aqui é a parte do PLAYER jogando, funciona de boa.
-            }else{
-                    for (let i = 0; i<slots.length;i++){//parte da ia jogando, mais perdido q cego em tiroteio
-                        if (slots[i].childNodes.length > 0 ){
-                            //preciso verificar se : 1) está na vez da IA jogar; 2) Gerar um numero aleatorio dentre as casas disponiveis; 3) Inserir a BOLA na casa
-                        }
-                    }
+        for (let i=0;i<slots.length;i++){
+            slots[i].addEventListener("click", function Oi () {
+                
+                
+                // aqui chamaremos a função para colocar o elemento na box
+                let el = CheckPlayer();
+        
+                //so adicionaremos o node caso o slot esteja vazio
+                if (slots[i].childNodes.length == 0){
+                    let CloneEl = el.cloneNode(true);
+                
+                    //colocamos o elemento como filho da box atual 
+                    this.appendChild(CloneEl);
                 }
-            winner();     
-            }
-            
-            )
-            
+                    //aqui clonamos o elemento pois se nao fizermos isso só terá um de cada (um x e uma bola)
+                winner();
+            })
         }
         
     }
 
-function elementsPlaying (counter1,counter2){
+function jogadamaquina(){
 
-    if (counter1 == counter2){
-        el = x;
-        counter1++;
-        
-    }else{
-        el = o;
-        counter2++;
+    let cloneO = o.cloneNode(true);
+    contador = 0;
+    preenchido = 0;
+
+    for (let i=0 ; i<slots.length;i++){
+        let randomNumber = Math.floor(Math.random() * 5);
+        if (slots[i].childNodes[0] == undefined){
+            if (randomNumber <= 1 ){
+                slots[i].appendChild(cloneO);
+                contador++;
+                break;
+            }
+        }else{
+            preenchido++;
+        }
     }
-    return el;
+    if (contador == 0 && preenchido <9){
+        jogadamaquina();
+
+    }
 }
