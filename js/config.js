@@ -92,7 +92,7 @@ function winner(){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else if (b1.childNodes[0]=='o' && b2.childNodes[0]=='o' && b3.childNodes[0]=='o'){
+            }else if (b1.childNodes[0].className=='o' && b2.childNodes[0].className=='o' && b3.childNodes[0].className=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
@@ -106,7 +106,7 @@ function winner(){
                         alert(" Jogador 1 " + message);
                         declararWinner("x");
                     },0300);
-                }else if (b4.childNodes[0]=='o' && b5.childNodes[0]=='o' && b6.childNodes[0]=='o'){
+                }else if (b4.childNodes[0].className =='o' && b5.childNodes[0].className =='o' && b6.childNodes[0].className =='o'){
                     setTimeout(function (){
                         alert(" Jogador 2 " + message);
                         declararWinner("o");
@@ -119,7 +119,7 @@ function winner(){
                         alert(" Jogador 1 " + message);
                         declararWinner("x");
                     },0300);
-                }else if (b7.childNodes[0]=='o' && b8.childNodes[0]=='o' && b9.childNodes[0]=='o'){
+                }else if (b7.childNodes[0].className=='o' && b8.childNodes[0].className=='o' && b9.childNodes[0].className=='o'){
                     setTimeout(function (){
                         alert(" Jogador 2 " + message);
                         declararWinner("o");
@@ -135,7 +135,7 @@ function winner(){
                     declararWinner("x");
                 },0300);
             }
-            else if (b1.childNodes[0]=='o' && b4.childNodes[0]=='o' && b7.childNodes[0]=='o'){
+            else if (b1.childNodes[0].className=='o' && b4.childNodes[0].className=='o' && b7.childNodes[0].className=='o'){
                 setTimeout( function (){
                     alert("Jogador 2 " + message)
                     declararWinner("o");
@@ -148,7 +148,7 @@ function winner(){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else if (b2.childNodes[0]=='o' && b5.childNodes[0]=='o' && b8.childNodes[0]=='o'){
+            }else if (b2.childNodes[0].className=='o' && b5.childNodes[0].className=='o' && b8.childNodes[0].className=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
@@ -161,7 +161,7 @@ function winner(){
                         alert(" Jogador 1 " + message);
                         declararWinner("x");
                     },0300);
-                }else if (b3.childNodes[0]=='o' && b6.childNodes[0]=='o' && b9.childNodes[0]=='o'){
+                }else if (b3.childNodes[0].className=='o' && b6.childNodes[0].className=='o' && b9.childNodes[0].className=='o'){
                     setTimeout(function (){
                         alert(" Jogador 2 " + message);
                         declararWinner("o");
@@ -176,7 +176,7 @@ function winner(){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else if (b1.childNodes[0]=='o' && b5.childNodes[0]=='o' && b9.childNodes[0]=='o'){
+            }else if (b1.childNodes[0].className=='o' && b5.childNodes[0].className=='o' && b9.childNodes[0].className=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
@@ -189,7 +189,7 @@ function winner(){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else if (b3.childNodes[0]=='o' && b5.childNodes[0]=='o' && b7.childNodes[0]=='o'){
+            }else if (b3.childNodes[0].className=='o' && b5.childNodes[0].className=='o' && b7.childNodes[0].className=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
