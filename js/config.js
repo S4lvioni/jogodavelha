@@ -15,14 +15,13 @@ let vitorias1 = document.getElementById("counterx");
 let vitorias2 = document.getElementById("countero");
 
 //contador de jogadas
-let counter1 = 0;
-let counter2 = 0;
+let player1 = 0;
+let player2 = 0;
 
 
 vsmode.addEventListener("click", function  (){
     container.classList.remove("hide");
     mostraPlacar.classList.remove("hide");
-    Start();
     vsia.style.display = "none";
     secondPlayer = this.getAttribute("id");
 })
@@ -30,71 +29,47 @@ vsmode.addEventListener("click", function  (){
 vsia.addEventListener("click", function () {
     container.classList.remove("hide");
     mostraPlacar.classList.remove("hide");
-    machinePlaying();
     vsmode.style.display = "none";
     secondPlayer = this.getAttribute("id");
 })
 
 //adicionando o evento de click para todas as boxes no modo 2P
-function Start(){
-    for (let i=0;i<slots.length;i++){
-        slots[i].addEventListener("click", function Oi () {
+
+for (let i=0;i<slots.length;i++){
+    slots[i].addEventListener("click", function Oi () {
             
             
-            // aqui chamaremos a função para colocar o elemento na box
-            let el = CheckPlayer();
-    
-            //so adicionaremos o node caso o slot esteja vazio
-            if (slots[i].childNodes.length == 0){
-                let CloneEl = el.cloneNode(true);
+        // aqui chamaremos a função para colocar o elemento na box
+         let el = CheckPlayer(player1,player2);
+
+        //so adicionaremos o node caso o slot esteja vazio
+        if (slots[i].childNodes.length == 0){
+            let CloneEl = el.cloneNode(true);
             
-                //colocamos o elemento como filho da box atual 
-                this.appendChild(CloneEl);
+            //colocamos o elemento como filho da box atual 
+            this.appendChild(CloneEl);
+            if(player1==player2){
+                player1++;
+                if(secondPlayer=='btn2'){
+                    //executar jogada
+                    jogadamaquina();
+                    player2++;
+                }
+            }else{
+                player2++;
             }
-                //aqui clonamos o elemento pois se nao fizermos isso só terá um de cada (um x e uma bola)
             winner();
-        })
-    }
-}
-
-
-function declararWinner(winner){
-
-    let PlacarX = document.querySelector("#counterx");//pegando o contador do placar
-    let PlacarO = document.querySelector("#countero");
-
-    if (winner == "x"){
-        PlacarX.textContent = parseInt(PlacarX.textContent) + 1; //recebendo o conteudo (string) e convertendo em INT
-    }else if (winner == "o"){
-        PlacarO.textContent = parseInt(PlacarO.textContent) + 1;
-    }else {
-        alert("Deu velha");
-    }
-
-    counter1 = 0; // isso faz com que o X sempre seja o primeiro a jogar.
-    counter2 = 0;
-
-    let slotsToRemove = document.querySelectorAll(".old div");
-    for (let i=0;i<slotsToRemove.length;i++){
-        slotsToRemove[i].parentNode.removeChild(slotsToRemove[i]);
-    }
-
-
-}
-
-
-function CheckPlayer(){
-    if(counter1 == counter2){// como ele sempre inicia em 0=0, o X será sempre o 1.
-        el = x;
-        counter1 = counter1 + 1; //adicionando um counter para que o if se torne falso
-
-        if(secondPlayer == "btn2"){
-            counter2++;
-            jogadamaquina();
         }
+        
+    })
+}
+
+
+function CheckPlayer(player1,player2){
+    if(player1 == player2){// como ele sempre inicia em 0=0, o X será sempre o 1.
+        el = x;
     }else{
         el= o;
-        counter2 = counter2 +1;// a chave dessa logica é o contador de jogadas lá encima. Quando estiverem iguais, é o X que joga, quando tiverem diferentes, é o circulo.
     }
     return el;
 }  
@@ -112,128 +87,116 @@ function winner(){
     //horizontais
     
     if (b1.childNodes.length > 0 && b2.childNodes.length > 0 && b3.childNodes.length >0){
-        if (b1.childNodes[0].className == b2.childNodes[0].className  && b2.childNodes[0].className == b3.childNodes[0].className ) {
-            if(counter1 > counter2){
+        if (b1.childNodes[0].className == "x" && b2.childNodes[0].className == "x" && b3.childNodes[0].className == "x") {
                 setTimeout(function (){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else{
+            }else if (b1.childNodes[0]=='o' && b2.childNodes[0]=='o' && b3.childNodes[0]=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
                 },0300);
             }
         }
-    } 
+     
     if(b4.childNodes.length > 0 && b5.childNodes.length > 0 && b6.childNodes.length >0){
-            if(b4.childNodes[0].className  === b5.childNodes[0].className && b5.childNodes[0].className === b6.childNodes[0].className){
-                if(counter1 > counter2){
+        if (b4.childNodes[0].className == "x" && b5.childNodes[0].className == "x" && b6.childNodes[0].className == "x") {
                     setTimeout(function (){
                         alert(" Jogador 1 " + message);
                         declararWinner("x");
                     },0300);
-                }else{
+                }else if (b4.childNodes[0]=='o' && b5.childNodes[0]=='o' && b6.childNodes[0]=='o'){
                     setTimeout(function (){
                         alert(" Jogador 2 " + message);
                         declararWinner("o");
                     },0300);
                 }
         }   
-    } 
     if(b7.childNodes.length > 0 && b8.childNodes.length > 0 && b9.childNodes.length >0){
-            if(b7.childNodes[0].className  === b8.childNodes[0].className && b8.childNodes[0].className === b9.childNodes[0].className){
-                if(counter1 > counter2){
+            if(b7.childNodes[0].className == "x" && b8.childNodes[0].className == "x" && b9.childNodes[0].className == "x"){
                     setTimeout(function (){
                         alert(" Jogador 1 " + message);
                         declararWinner("x");
                     },0300);
-                }else{
+                }else if (b7.childNodes[0]=='o' && b8.childNodes[0]=='o' && b9.childNodes[0]=='o'){
                     setTimeout(function (){
                         alert(" Jogador 2 " + message);
                         declararWinner("o");
                     },0300);
                 }
         }   
-        }
         
     //verticais
      if(b1.childNodes.length > 0 && b4.childNodes.length > 0 && b7.childNodes.length >0){
-         if(b1.childNodes[0].className === b4.childNodes[0].className && b4.childNodes[0].className === b7.childNodes[0].className){
-            if(counter1 > counter2){
+         if(b1.childNodes[0].className == "x" && b4.childNodes[0].className == "x" && b7.childNodes[0].className == "x"){
                 setTimeout(function (){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
             }
-            if (counter1 == counter2){
+            else if (b1.childNodes[0]=='o' && b4.childNodes[0]=='o' && b7.childNodes[0]=='o'){
                 setTimeout( function (){
                     alert("Jogador 2 " + message)
                     declararWinner("o");
                 },0300);
             }
         }
-    }
      if(b2.childNodes.length > 0 && b5.childNodes.length > 0 && b8.childNodes.length >0){
-         if(b2.childNodes[0].className === b5.childNodes[0].className && b5.childNodes[0].className=== b8.childNodes[0].className){
-            if(counter1 > counter2){
+         if(b2.childNodes[0].className == "x" && b5.childNodes[0].className == "x" && b8.childNodes[0].className == "x"){
                 setTimeout(function (){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else if (counter1 == counter2){
+            }else if (b2.childNodes[0]=='o' && b5.childNodes[0]=='o' && b8.childNodes[0]=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
                 },0300);
             }
-        }}
+        }
          if(b3.childNodes.length > 0 && b6.childNodes.length > 0 && b9.childNodes.length >0){
-            if(b3.childNodes[0].className === b6.childNodes[0].className && b6.childNodes[0].className === b9.childNodes[0].className){
-                if(counter1 > counter2){
+            if(b3.childNodes[0].className == "x" && b6.childNodes[0].className == "x" && b9.childNodes[0].className == "x"){
                     setTimeout(function (){
                         alert(" Jogador 1 " + message);
                         declararWinner("x");
                     },0300);
-                }else{
+                }else if (b3.childNodes[0]=='o' && b6.childNodes[0]=='o' && b9.childNodes[0]=='o'){
                     setTimeout(function (){
                         alert(" Jogador 2 " + message);
                         declararWinner("o");
                     },0300);
                 }
         }
-        }
-        
+    
     //diagonais
          if(b1.childNodes.length > 0 && b5.childNodes.length > 0 && b9.childNodes.length >0){
-         if(b1.childNodes[0].className === b5.childNodes[0].className && b5.childNodes[0].className === b9.childNodes[0].className ){
-            if(counter1 > counter2){
+         if(b1.childNodes[0].className == "x" && b5.childNodes[0].className == "x" && b9.childNodes[0].className == "x"){
                 setTimeout(function (){
                     alert(" Jogador 1 " + message);
                     declararWinner("x");
                 },0300);
-            }else{
-                setTimeout(function (){
-                    alert(" Jogador 2 " + message);
-                    declararWinner("o");
-                },0300);
-            }
-        }}
-         if(b3.childNodes.length > 0 && b5.childNodes.length > 0 && b7.childNodes.length >0){
-         if(b3.childNodes[0].className === b5.childNodes[0].className && b5.childNodes[0].className === b7.childNodes[0].className ){
-            if(counter1 > counter2){
-                setTimeout(function (){
-                    alert(" Jogador 1 " + message);
-                    declararWinner("x");
-                },0300);
-            }else{
+            }else if (b1.childNodes[0]=='o' && b5.childNodes[0]=='o' && b9.childNodes[0]=='o'){
                 setTimeout(function (){
                     alert(" Jogador 2 " + message);
                     declararWinner("o");
                 },0300);
             }
         }
-    }
+         if(b3.childNodes.length > 0 && b5.childNodes.length > 0 && b7.childNodes.length >0){
+         if(b3.childNodes[0].className == "x" && b5.childNodes[0].className == "x" && b7.childNodes[0].className == "x" ){
+                setTimeout(function (){
+                    alert(" Jogador 1 " + message);
+                    declararWinner("x");
+                },0300);
+            }else if (b3.childNodes[0]=='o' && b5.childNodes[0]=='o' && b7.childNodes[0]=='o'){
+                setTimeout(function (){
+                    alert(" Jogador 2 " + message);
+                    declararWinner("o");
+                },0300);
+            }
+        }
+
 
     for (let i=0;i<slots.length;i++){
         if(slots[i].childNodes[0] != undefined){
@@ -247,33 +210,31 @@ function winner(){
     }
 }
 
-  //IA
-    function machinePlaying(){
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-        for (let i=0;i<slots.length;i++){
-            slots[i].addEventListener("click", function Oi () {
-                
-                
-                // aqui chamaremos a função para colocar o elemento na box
-                let el = CheckPlayer();
-        
-                //so adicionaremos o node caso o slot esteja vazio
-                if (slots[i].childNodes.length == 0){
-                    let CloneEl = el.cloneNode(true);
-                
-                    //colocamos o elemento como filho da box atual 
-                    this.appendChild(CloneEl);
-                }
-                    //aqui clonamos o elemento pois se nao fizermos isso só terá um de cada (um x e uma bola)
-                winner();
-            })
-        }
-        
+function declararWinner(winner){
+
+    let PlacarX = document.querySelector("#counterx");//pegando o contador do placar
+    let PlacarO = document.querySelector("#countero");
+
+    if (winner == "x"){
+        PlacarX.textContent = parseInt(PlacarX.textContent) + 1; //recebendo o conteudo (string) e convertendo em INT
+    }else if (winner == "o"){
+        PlacarO.textContent = parseInt(PlacarO.textContent) + 1;
+    }else {
+        alert("Deu velha");
     }
+
+    player1 = 0; // isso faz com que o X sempre seja o primeiro a jogar.
+    player2 = 0;
+
+    let slotsToRemove = document.querySelectorAll(".old div");
+    for (let i=0;i<slotsToRemove.length;i++){
+        slotsToRemove[i].parentNode.removeChild(slotsToRemove[i]);
+    }
+
+
+}
+  //IA
+   
 
 function jogadamaquina(){
 
@@ -295,6 +256,5 @@ function jogadamaquina(){
     }
     if (contador == 0 && preenchido <9){
         jogadamaquina();
-
     }
 }
